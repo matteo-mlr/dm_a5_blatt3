@@ -38,8 +38,6 @@ public class DBAnbindung implements DBInterface {
 	public String execute (String statement) {
 		
 		StringBuilder sb = new StringBuilder(10000);
-		int id = 0;
-		String telefonnummer = "";
 		
 		try {
 		
@@ -61,11 +59,13 @@ public class DBAnbindung implements DBInterface {
 				
 			}
 			
-			for (int current : columnType)
-				System.out.println(current);
+			for (String current : columnNames)
+				sb.append(current + "\t");
+			
+			sb.append("\n\n");
 			
 			while (rs.next()) {
-			
+				
 				for (int i = 0; i < columCount; i++) {
 					
 					switch (columnType[i]) {
@@ -73,6 +73,7 @@ public class DBAnbindung implements DBInterface {
 					case -5: sb.append("" + rs.getInt(columnNames[i]) + "\t"); break;
 					case 12: sb.append("" + rs.getString(columnNames[i]) + "\t"); break;
 					case 92: sb.append("" + rs.getTime(columnNames[i]) + "\t"); break;
+					case -4: sb.append("" + rs.getBlob(columnNames[i]) + "\t"); break;
 					
 					}
 					
