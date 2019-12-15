@@ -11,11 +11,12 @@ public class DBAnbindung implements DBInterface {
 	private Connection con = null;
 	private Statement stt = null;
 	
-	private String url = "jdbc:mysql://localhost:3306/WhatsApp";
+	private String url;
 
 	public DBAnbindung () {
 		
-		
+		url = "jdbc:mysql://localhost:3306/WhatsApp";
+		DBinit();
 		
 	}
 	
@@ -59,6 +60,9 @@ public class DBAnbindung implements DBInterface {
 				
 			}
 			
+			for (int current : columnType)
+				System.out.println(current);
+			
 			for (String current : columnNames)
 				sb.append(current + "\t");
 			
@@ -67,15 +71,18 @@ public class DBAnbindung implements DBInterface {
 			while (rs.next()) {
 				
 				for (int i = 0; i < columCount; i++) {
-					
+										
 					switch (columnType[i]) {
 					
-					case -5: sb.append("" + rs.getInt(columnNames[i]) + "\t"); break;
-					case 12: sb.append("" + rs.getString(columnNames[i]) + "\t"); break;
-					case 92: sb.append("" + rs.getTime(columnNames[i]) + "\t"); break;
-					case -4: sb.append("" + rs.getBlob(columnNames[i]) + "\t"); break;
+					case -5: sb.append("" + rs.getInt(columnNames[i])); break;
+					case 12: sb.append("" + rs.getString(columnNames[i])); break;
+					case 92: sb.append("" + rs.getTime(columnNames[i])); break;
+					case -4: sb.append("" + rs.getBlob(columnNames[i])); break;
+					case -7: sb.append("" + (rs.getBoolean(columnNames[i]) ? "TRUE" : "FALSE")); break;
 					
 					}
+					
+					sb.append("\t");
 					
 				}
 				

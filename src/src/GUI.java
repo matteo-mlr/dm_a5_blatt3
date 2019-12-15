@@ -6,13 +6,11 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -20,8 +18,8 @@ public class GUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JButton[] buttons = new JButton[10];
-	private JTextField sqlInputField = new JTextField(60);
-	private JTextArea anzeige = new JTextArea();
+	private JTextField sqlInputField = new JTextField(100);
+	private static JTextArea anzeige = new JTextArea();
 	JButton execute;
 	
 	private static DBInterface db;
@@ -30,7 +28,6 @@ public class GUI extends JFrame implements ActionListener {
 		
 		GUI gui = new GUI();
 		db = new DBAnbindung();
-		db.DBinit();
 		
 	}
 	
@@ -38,8 +35,8 @@ public class GUI extends JFrame implements ActionListener {
 		
 		GridLayout layout = new GridLayout(3,1);
 		this.setLayout(layout);
-		this.setSize(new Dimension(900,600));
-		this.setMinimumSize(new Dimension(800,500));
+		this.setSize(new Dimension(1500,700));
+		this.setMinimumSize(new Dimension(1500,600));
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		add(ausgabeInit());
