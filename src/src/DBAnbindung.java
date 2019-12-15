@@ -82,6 +82,7 @@ public class DBAnbindung implements DBInterface {
 					
 					}
 					
+//					sb.append(rs.getString(columnNames[i])); 
 					sb.append("\t");
 					
 				}
@@ -97,6 +98,7 @@ public class DBAnbindung implements DBInterface {
 			
 		}
 		
+		System.out.println("Done");
 		return sb.toString();
 		
 	}

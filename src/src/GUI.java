@@ -151,10 +151,10 @@ public class GUI extends JFrame implements ActionListener {
 			
 			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = 2);")));
 			
-		} else if ((JButton) e.getSource() == buttons[7]) {
-			
-			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = 2);")));
-			
+//		} else if ((JButton) e.getSource() == buttons[7]) {
+//			
+//			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = 2);")));
+//			
 		} else if ((JButton) e.getSource() == buttons[8]) {
 			
 			anzeigen((db.execute("SELECT a.account_id FROM (SELECT account_id FROM accountInChat WHERE chat_id = 11) a INNER JOIN (SELECT account_id FROM profil WHERE profilbild IS NULL) b ON a.account_id = b.account_id;")));
