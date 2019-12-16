@@ -72,17 +72,17 @@ public class DBAnbindung implements DBInterface {
 				
 				for (int i = 0; i < columCount; i++) {
 										
-					switch (columnType[i]) {
+//					switch (columnType[i]) {
+//					
+//					case -5: sb.append("" + rs.getInt(columnNames[i])); break;
+//					case 12: sb.append("" + rs.getString(columnNames[i])); break;
+//					case 92: sb.append("" + rs.getTime(columnNames[i])); break;
+//					case -4: sb.append("" + rs.getBlob(columnNames[i])); break;
+//					case -7: sb.append("" + (rs.getBoolean(columnNames[i]) ? "TRUE" : "FALSE")); break;
+//					
+//		 			}
 					
-					case -5: sb.append("" + rs.getInt(columnNames[i])); break;
-					case 12: sb.append("" + rs.getString(columnNames[i])); break;
-					case 92: sb.append("" + rs.getTime(columnNames[i])); break;
-					case -4: sb.append("" + rs.getBlob(columnNames[i])); break;
-					case -7: sb.append("" + (rs.getBoolean(columnNames[i]) ? "TRUE" : "FALSE")); break;
-					
-					}
-					
-//					sb.append(rs.getString(columnNames[i])); 
+					sb.append(rs.getString(columnNames[i])); 
 					sb.append("\t");
 					
 				}
