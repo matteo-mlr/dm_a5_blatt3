@@ -2,47 +2,66 @@ package src;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 
 public class DBAnbindung implements DBInterface {
 	
+	/**
+	 * eine Verbindung zur Datenbank
+	 */
 	private Connection con = null;
-	private Statement stt = null;
 	
+	/**
+	 * spätere SQL-Abfrage
+	 */
+	private PreparedStatement ps = null;
+	
+	/**
+	 * String mit url und Zugangsdaten zur Datenbank
+	 */
 	private String url;
 
+	/**
+	 * Konstruktor, initiallisiert DB Anbindung
+	 */
 	public DBAnbindung () {
 		
-		url = "jdbc:mysql://localhost:3306/WhatsApp";
+		url = "jdbc:mysql://localhost:3306/whatsapp";
 		DBinit();
 		
 	}
-	
+	/**
+	 * stellt Verbindung zur DB her
+	 */
 	public void DBinit() {
 		
 		try {
 			
 			con = DriverManager.getConnection(url +"?user=root" + "&password=&serverTimezone=UTC");
 			
-			stt = con.createStatement();
+//			stt = con.createStatement();
 			
 		} catch (Exception ioe) {
-			
+			con = null;
 			ioe.printStackTrace();
 			
 		}
 		
 	}
-	
+	/**
+	 * führt gegebene SQL-Abfrage auf Datenbank aus und liefert Ergebnis zurück
+	 * @param statement, SQL-Statement das ausgegeben werden soll
+	 * @return String mit Ergebnis der SQL-Abfrage
+	 */
 	public String execute (String statement) {
 		
 		StringBuilder sb = new StringBuilder(10000);
 		
 		try {
-		
-			ResultSet rs = stt.executeQuery(statement);
+			ps = con.prepareStatement(statement);
+			ResultSet rs = ps.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int columCount = rsmd.getColumnCount();
 			int[] columnType = new int[columCount];

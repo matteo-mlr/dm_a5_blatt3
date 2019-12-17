@@ -10,27 +10,42 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class GUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Button Array in dem alle Buttons liegen, welche die vorgefertigten SQL-Statements ausführen
+	 */
 	private JButton[] buttons = new JButton[10];
+	/**
+	 * Textfeld in dem manuell SQL-Statements eingegeben werden können
+	 */
 	private JTextField sqlInputField = new JTextField(100);
+	/**
+	 * Textfeld in dem die Rückgabe der SQL-Abfragen angezeigt wird
+	 */
 	private static JTextArea anzeige = new JTextArea();
+	/**
+	 * Button um den Inhalt in sqlInputField auszuführen
+	 */
 	JButton execute;
-	
+	/**
+	 * Interface zur Kommunikation mit der DBAnbindung
+	 */
 	private static DBInterface db;
 	
 	public static void main (String[] args) {
 		
-		GUI gui = new GUI();
+		new GUI();
 		db = new DBAnbindung();
 		
 	}
-	
+	/**
+	 * Konstruktor, setzt notwendige werte für GUI bzw JFrame
+	 */
 	public GUI () {
 		
 		GridLayout layout = new GridLayout(3,1);
@@ -46,7 +61,10 @@ public class GUI extends JFrame implements ActionListener {
 		this.setVisible(true);
 		
 	}
-	
+	/**
+	 * Erstellt Anzeigebereich für die Ergebnisse der SQL Abfragen
+	 * @return JPanel, die Ausgabe der eingegebenen SQL Abfragen
+	 */
 	private JPanel ausgabeInit () {
 		
 		JPanel ausgabe = new JPanel();
@@ -65,11 +83,14 @@ public class GUI extends JFrame implements ActionListener {
 		return ausgabe; 
 		
 	}
-	
+	/**
+	 * dem JPanel wird das sqlInputField hinzugefügt um manuelle SQL-Eingaben zu ermöglichen
+	 * @return JPanel,  für die manuelle eingabe der SQL Statements
+	 */
 	private JPanel sqlInputInit () {
 		
 		JPanel sqlInput = new JPanel();
-		execute = new JButton("AusfÃ¼hren");
+		execute = new JButton("Ausfuehren");
 
 		sqlInput.setSize(new Dimension(100,700));
 		sqlInput.setLayout(new GridBagLayout());
@@ -87,7 +108,10 @@ public class GUI extends JFrame implements ActionListener {
 		return sqlInput;
 		
 	}
-	
+	/**
+	 * Panel in dem die Buttons eingefügt werden für die vorgefertigten SQL-Statements
+	 * @return JPanel, in welchem die Buttons mit den vorgefertigten SQL-Statements liegen 
+	 */
 	private JPanel buttonPanelInit () {
 		
 		JPanel buttonPanel = new JPanel();
@@ -108,13 +132,18 @@ public class GUI extends JFrame implements ActionListener {
 		return buttonPanel; 
 		
 	}
-	
+	/**
+	 * fügt die Ergebnisse der SQL Abfragen der Anzeige hinzu
+	 */
 	private void anzeigen (String text) {
 		
 		anzeige.setText(text);
 		
 	}
-	
+	/**
+	 * wird aufgerufen wenn in der GUI ein Button betätigt wird und definiert die Funktionsweise des Buttons
+	 * @param e, ist das ActionEvent dass durch das betätigen eines Buttons ausgelöst wird
+	 */
 	public void actionPerformed (ActionEvent e) {
 		
 		if ((JButton) e.getSource() == execute) {
@@ -141,7 +170,7 @@ public class GUI extends JFrame implements ActionListener {
 			
 		} else if ((JButton) e.getSource() == buttons[4]) {
 			
-			anzeigen((db.execute("SELECT groeÃŸeByte FROM verlauf WHERE chat_id = 4 AND anzNachrichten = 5;")));
+			anzeigen((db.execute("SELECT groeßeByte FROM verlauf WHERE chat_id = 4 AND anzNachrichten = 5;")));
 			
 		} else if ((JButton) e.getSource() == buttons[5]) {
 			
@@ -151,10 +180,10 @@ public class GUI extends JFrame implements ActionListener {
 			
 			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = 2);")));
 			
-//		} else if ((JButton) e.getSource() == buttons[7]) {
-//			
-//			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = 2);")));
-//			
+		} else if ((JButton) e.getSource() == buttons[7]) {
+			
+			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = 2);")));
+			
 		} else if ((JButton) e.getSource() == buttons[8]) {
 			
 			anzeigen((db.execute("SELECT a.account_id FROM (SELECT account_id FROM accountInChat WHERE chat_id = 11) a INNER JOIN (SELECT account_id FROM profil WHERE profilbild IS NULL) b ON a.account_id = b.account_id;")));
@@ -164,7 +193,9 @@ public class GUI extends JFrame implements ActionListener {
 			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE datei.id IN (SELECT datei_id FROM nachricht WHERE verlauf_id IN ( SELECT id FROM verlauf WHERE chat_id = 4 ) AND datei_id IS NOT NULL);")));
 			
 		}
-		
+		else {
+			System.out.println("Fehler!");
+		}
 	}
 	
 }
