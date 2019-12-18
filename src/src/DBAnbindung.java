@@ -131,6 +131,7 @@ public class DBAnbindung implements DBInterface {
 		int counter = 0;
 		
 		try {
+			
 			ps = con.prepareStatement(statement);
 			
 			for (int i = 0; i < argumente.length; i++) {
@@ -138,8 +139,6 @@ public class DBAnbindung implements DBInterface {
 				ps.setString((i+1), argumente[i]);
 				
 			}
-			
-			System.out.println(ps.toString());
 			
 			ResultSet rs = ps.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
