@@ -14,7 +14,7 @@ public class DBAnbindung implements DBInterface {
 	private Connection con = null;
 	
 	/**
-	 * spätere SQL-Abfrage
+	 * spï¿½tere SQL-Abfrage
 	 */
 	private PreparedStatement ps = null;
 	
@@ -51,7 +51,7 @@ public class DBAnbindung implements DBInterface {
 		
 	}
 	/**
-	 * führt gegebene SQL-Abfrage auf Datenbank aus und liefert Ergebnis zurück
+	 * fï¿½hrt gegebene SQL-Abfrage auf Datenbank aus und liefert Ergebnis zurï¿½ck
 	 * @param statement, SQL-Statement das ausgegeben werden soll
 	 * @return String mit Ergebnis der SQL-Abfrage
 	 */
@@ -118,6 +118,89 @@ public class DBAnbindung implements DBInterface {
 		}
 		
 		System.out.println("Done");
+		return sb.toString();
+		
+	}
+	
+	public String executePs (String statementÃœbergeben, String[] argumente) {
+		
+		String statement = statementÃœbergeben;
+		
+		StringBuilder sb = new StringBuilder(10000);
+		
+		int counter = 0;
+		
+		try {
+			ps = con.prepareStatement(statement);
+			
+			for (int i = 0; i < argumente.length; i++) {
+				
+				ps.setString((i+1), argumente[i]);
+				
+			}
+			
+			System.out.println(ps.toString());
+			
+			ResultSet rs = ps.executeQuery();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columCount = rsmd.getColumnCount();
+			int[] columnType = new int[columCount];
+			String[] columnNames = new String[columCount];
+			
+			for (int i = 0; i < columCount; i++) {
+				
+				columnType[i] = rsmd.getColumnType(i+1);
+				
+			}
+			
+			for (int i = 0; i < columCount; i++) {
+				
+				columnNames[i] = rsmd.getColumnName(i+1);
+				
+			}
+			
+			for (int current : columnType)
+				System.out.println(current);
+			
+			for (String current : columnNames)
+				sb.append(current + "\t");
+			
+			sb.append("\n\n");
+			
+			while (rs.next()) {
+				
+				counter++;
+				for (int i = 0; i < columCount; i++) {
+										
+//				switch (columnType[i]) {
+//					
+//					case -5: sb.append("" + rs.getInt(columnNames[i])); break;
+//					case 12: sb.append("" + rs.getString(columnNames[i])); break;
+//					case 92: sb.append("" + rs.getTime(columnNames[i])); break;
+//					case -4: sb.append("" + rs.getBlob(columnNames[i])); break;
+//					case -7: sb.append("" + (rs.getBoolean(columnNames[i]) ? "TRUE" : "FALSE")); break;
+//					
+//		 			}
+					
+					sb.append(rs.getString(columnNames[i])); 
+					sb.append("\t");
+					
+				}
+				
+				sb.append("\n");
+			
+			}
+			
+		
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		if (counter == 0)
+			sb.append("Keine Suchergebnisse.");
+		
 		return sb.toString();
 		
 	}

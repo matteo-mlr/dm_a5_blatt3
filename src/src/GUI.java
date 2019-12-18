@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -17,19 +18,19 @@ public class GUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Button Array in dem alle Buttons liegen, welche die vorgefertigten SQL-Statements ausführen
+	 * Button Array in dem alle Buttons liegen, welche die vorgefertigten SQL-Statements ausfï¿½hren
 	 */
 	private JButton[] buttons = new JButton[10];
 	/**
-	 * Textfeld in dem manuell SQL-Statements eingegeben werden können
+	 * Textfeld in dem manuell SQL-Statements eingegeben werden kï¿½nnen
 	 */
 	private JTextField sqlInputField = new JTextField(100);
 	/**
-	 * Textfeld in dem die Rückgabe der SQL-Abfragen angezeigt wird
+	 * Textfeld in dem die Rï¿½ckgabe der SQL-Abfragen angezeigt wird
 	 */
 	private static JTextArea anzeige = new JTextArea();
 	/**
-	 * Button um den Inhalt in sqlInputField auszuführen
+	 * Button um den Inhalt in sqlInputField auszufï¿½hren
 	 */
 	JButton execute;
 	/**
@@ -44,7 +45,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * Konstruktor, setzt notwendige werte für GUI bzw JFrame
+	 * Konstruktor, setzt notwendige werte fï¿½r GUI bzw JFrame
 	 */
 	public GUI () {
 		
@@ -62,7 +63,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * Erstellt Anzeigebereich für die Ergebnisse der SQL Abfragen
+	 * Erstellt Anzeigebereich fï¿½r die Ergebnisse der SQL Abfragen
 	 * @return JPanel, die Ausgabe der eingegebenen SQL Abfragen
 	 */
 	private JPanel ausgabeInit () {
@@ -84,8 +85,8 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * dem JPanel wird das sqlInputField hinzugefügt um manuelle SQL-Eingaben zu ermöglichen
-	 * @return JPanel,  für die manuelle eingabe der SQL Statements
+	 * dem JPanel wird das sqlInputField hinzugefï¿½gt um manuelle SQL-Eingaben zu ermï¿½glichen
+	 * @return JPanel,  fï¿½r die manuelle eingabe der SQL Statements
 	 */
 	private JPanel sqlInputInit () {
 		
@@ -109,7 +110,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * Panel in dem die Buttons eingefügt werden für die vorgefertigten SQL-Statements
+	 * Panel in dem die Buttons eingefï¿½gt werden fï¿½r die vorgefertigten SQL-Statements
 	 * @return JPanel, in welchem die Buttons mit den vorgefertigten SQL-Statements liegen 
 	 */
 	private JPanel buttonPanelInit () {
@@ -133,7 +134,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * fügt die Ergebnisse der SQL Abfragen der Anzeige hinzu
+	 * fï¿½gt die Ergebnisse der SQL Abfragen der Anzeige hinzu
 	 */
 	private void anzeigen (String text) {
 		
@@ -141,8 +142,8 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * wird aufgerufen wenn in der GUI ein Button betätigt wird und definiert die Funktionsweise des Buttons
-	 * @param e, ist das ActionEvent dass durch das betätigen eines Buttons ausgelöst wird
+	 * wird aufgerufen wenn in der GUI ein Button betï¿½tigt wird und definiert die Funktionsweise des Buttons
+	 * @param e, ist das ActionEvent dass durch das betï¿½tigen eines Buttons ausgelï¿½st wird
 	 */
 	public void actionPerformed (ActionEvent e) {
 		
@@ -154,43 +155,76 @@ public class GUI extends JFrame implements ActionListener {
 		
 		if ((JButton) e.getSource() == buttons[0]) {
 			
-			anzeigen((db.execute("SELECT dauer FROM telefonat WHERE id = 4;")));
-			
+			String[] argumente = new String[1];
+			argumente[0] = JOptionPane.showInputDialog("Telefontat-ID:");
+			anzeigen((db.executePs("SELECT dauer FROM telefonat WHERE id = ?;", argumente)));
+							
 		} else if ((JButton) e.getSource() == buttons[1]) {
 			
-			anzeigen((db.execute("SELECT id FROM chat WHERE gepinnt = false;")));
+			String[] argumente = new String[1];
+			String gepinnt = JOptionPane.showInputDialog("Gepinnt? (Ja / Nein):");
+			if (gepinnt.equalsIgnoreCase("ja"))
+				argumente[0] = "true";
+			if (gepinnt.equalsIgnoreCase("nein"))
+				argumente[0] = "false";
+			anzeigen((db.executePs("SELECT id FROM chat WHERE gepinnt = ?;", argumente)));
 			
 		} else if ((JButton) e.getSource() == buttons[2]) {
 			
-			anzeigen((db.execute("SELECT telefonnummer FROM account WHERE id = 3;")));
+			String[] argumente = new String[1];
+			argumente[0] = JOptionPane.showInputDialog("Account-ID:");
+			anzeigen((db.executePs("SELECT telefonnummer FROM account WHERE id = ?;", argumente)));
 			
 		} else if ((JButton) e.getSource() == buttons[3]) {
 			
-			anzeigen((db.execute("SELECT id FROM statistik WHERE bytesGesendet = 93004 AND account_id = 1;")));
+			String[] argumente = new String[2];
+			argumente[0] = JOptionPane.showInputDialog("Gesendete Bytes:");
+			argumente[1] = JOptionPane.showInputDialog("Account-ID:");
+			anzeigen((db.executePs("SELECT id FROM statistik WHERE bytesGesendet = ? AND account_id = ?;", argumente)));
 			
 		} else if ((JButton) e.getSource() == buttons[4]) {
 			
-			anzeigen((db.execute("SELECT groeßeByte FROM verlauf WHERE chat_id = 4 AND anzNachrichten = 5;")));
+			String[] argumente = new String[2];
+			argumente[0] = JOptionPane.showInputDialog("Chat-ID:");
+			argumente[1] = JOptionPane.showInputDialog("Nachrichtenanzahl:");
+			anzeigen((db.executePs("SELECT groeÃŸeByte FROM verlauf WHERE chat_id = ? AND anzNachrichten = ?;", argumente)));
 			
 		} else if ((JButton) e.getSource() == buttons[5]) {
 			
+			String[] argumente = new String[1];
+			argumente[0] = JOptionPane.showInputDialog("Nachricht-ID:");
 			anzeigen((db.execute("SELECT nutzername FROM profil WHERE account_id IN (SELECT verfasser FROM nachricht WHERE id = 3);")));
 			
 		} else if ((JButton) e.getSource() == buttons[6]) {
 			
-			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = 2);")));
+			String[] argumente = new String[1];
+			argumente[0] = JOptionPane.showInputDialog("Account-ID:");
+			anzeigen((db.executePs("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = ?);", argumente)));
 			
 		} else if ((JButton) e.getSource() == buttons[7]) {
 			
-			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = 2);")));
+			String[] argumente = new String[1];
+			argumente[0] = JOptionPane.showInputDialog("Account-ID:");
+			anzeigen((db.executePs("SELECT dateiPfad FROM datei WHERE id IN (SELECT profilbild FROM profil WHERE account_id = ?);", argumente)));
 			
 		} else if ((JButton) e.getSource() == buttons[8]) {
 			
-			anzeigen((db.execute("SELECT a.account_id FROM (SELECT account_id FROM accountInChat WHERE chat_id = 11) a INNER JOIN (SELECT account_id FROM profil WHERE profilbild IS NULL) b ON a.account_id = b.account_id;")));
+			String[] argumente = new String[1];
+			argumente[0] = JOptionPane.showInputDialog("Chat-ID:");
+
+			String eingabe = JOptionPane.showInputDialog("Profilbild? (Ja / Nein):");
+			
+			if (eingabe.equalsIgnoreCase("ja"))
+				anzeigen((db.executePs("SELECT a.account_id FROM (SELECT account_id FROM accountInChat WHERE chat_id = ?) a INNER JOIN (SELECT account_id FROM profil WHERE profilbild IS NOT NULL) b ON a.account_id = b.account_id;", argumente)));
+			if (eingabe.equalsIgnoreCase("nein"))
+				anzeigen((db.executePs("SELECT a.account_id FROM (SELECT account_id FROM accountInChat WHERE chat_id = ?) a INNER JOIN (SELECT account_id FROM profil WHERE profilbild IS NULL) b ON a.account_id = b.account_id;", argumente)));
+			
 			
 		} else if ((JButton) e.getSource() == buttons[9]) {
 			
-			anzeigen((db.execute("SELECT dateiPfad FROM datei WHERE datei.id IN (SELECT datei_id FROM nachricht WHERE verlauf_id IN ( SELECT id FROM verlauf WHERE chat_id = 4 ) AND datei_id IS NOT NULL);")));
+			String[] argumente = new String[1];
+			argumente[0] = JOptionPane.showInputDialog("Chat-ID:");
+			anzeigen((db.executePs("SELECT dateiPfad FROM datei WHERE datei.id IN (SELECT datei_id FROM nachricht WHERE verlauf_id IN ( SELECT id FROM verlauf WHERE chat_id = ? ) AND datei_id IS NOT NULL);", argumente)));
 			
 		}
 		else {

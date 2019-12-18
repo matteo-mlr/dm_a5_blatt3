@@ -7,10 +7,12 @@ public interface DBInterface {
 	void DBinit();
 	
 	/**
-	 * führt SQL-Statements auf Datenbank aus und gibt Ergebnisse zurück
+	 * fï¿½hrt SQL-Statements auf Datenbank aus und gibt Ergebnisse zurï¿½ck
 	 * @param statment, SQL-Statement
 	 * @return String mit Ergebnissen der SQL-Abfrage
 	 */
 	String execute(String statment);
+	
+	String executePs(String statment, String[] argumente);
 
 }
