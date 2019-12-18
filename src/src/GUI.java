@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,7 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class GUI extends JFrame implements ActionListener {
-
+	
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Button Array in dem alle Buttons liegen, welche die vorgefertigten SQL-Statements ausf�hren
@@ -36,12 +38,15 @@ public class GUI extends JFrame implements ActionListener {
 	/**
 	 * Interface zur Kommunikation mit der DBAnbindung
 	 */
-	private static DBInterface db;
+	private static iDatenzugriff db;
+	
+	private static GUI gui;
 	
 	public static void main (String[] args) {
 		
-		new GUI();
+		gui = new GUI();
 		db = new DBAnbindung();
+		db.DBoeffnen();
 		
 	}
 	/**
@@ -54,6 +59,17 @@ public class GUI extends JFrame implements ActionListener {
 		this.setSize(new Dimension(1500,700));
 		this.setMinimumSize(new Dimension(1500,600));
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				db.DBschliessen();
+				gui.dispose();
+				System.exit(0);
+			}
+
+			
+		});
 		
 		add(ausgabeInit());
 		add(sqlInputInit());
@@ -62,6 +78,8 @@ public class GUI extends JFrame implements ActionListener {
 		this.setVisible(true);
 		
 	}
+	
+	
 	/**
 	 * Erstellt Anzeigebereich f�r die Ergebnisse der SQL Abfragen
 	 * @return JPanel, die Ausgabe der eingegebenen SQL Abfragen
@@ -134,7 +152,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * f�gt die Ergebnisse der SQL Abfragen der Anzeige hinzu
+	 * fuegt die Ergebnisse der SQL Abfragen der Anzeige hinzu
 	 */
 	private void anzeigen (String text) {
 		
@@ -143,7 +161,7 @@ public class GUI extends JFrame implements ActionListener {
 	}
 	/**
 	 * wird aufgerufen wenn in der GUI ein Button bet�tigt wird und definiert die Funktionsweise des Buttons
-	 * @param e, ist das ActionEvent dass durch das bet�tigen eines Buttons ausgel�st wird
+	 * @param e, ist das ActionEvent dass durch das betaetigen eines Buttons ausgeloest wird
 	 */
 	public void actionPerformed (ActionEvent e) {
 		

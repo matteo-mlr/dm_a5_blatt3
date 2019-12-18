@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
-public class DBAnbindung implements DBInterface {
+public class DBAnbindung implements iDatenzugriff {
 	
 	/**
 	 * eine Verbindung zur Datenbank
@@ -14,32 +14,27 @@ public class DBAnbindung implements DBInterface {
 	private Connection con = null;
 	
 	/**
-	 * sp�tere SQL-Abfrage
+	 * spaetere SQL-Abfrage
 	 */
 	private PreparedStatement ps = null;
 	
-	/**
-	 * String mit url und Zugangsdaten zur Datenbank
-	 */
-	private String url;
 
 	/**
 	 * Konstruktor, initiallisiert DB Anbindung
 	 */
 	public DBAnbindung () {
 		
-		url = "jdbc:mysql://localhost:3306/whatsapp";
-		DBinit();
-		
+//		DBoeffnen();
 	}
 	/**
 	 * stellt Verbindung zur DB her
 	 */
-	public void DBinit() {
+	@Override
+	public void DBoeffnen() {
 		
 		try {
 			
-			con = DriverManager.getConnection(url +"?user=root" + "&password=&serverTimezone=UTC");
+			con = DriverManager.getConnection(Config.url);
 			
 //			stt = con.createStatement();
 			
@@ -51,7 +46,7 @@ public class DBAnbindung implements DBInterface {
 		
 	}
 	/**
-	 * f�hrt gegebene SQL-Abfrage auf Datenbank aus und liefert Ergebnis zur�ck
+	 * fuehrt gegebene SQL-Abfrage auf Datenbank aus und liefert Ergebnis zurueck
 	 * @param statement, SQL-Statement das ausgegeben werden soll
 	 * @return String mit Ergebnis der SQL-Abfrage
 	 */
@@ -121,10 +116,15 @@ public class DBAnbindung implements DBInterface {
 		return sb.toString();
 		
 	}
-	
-	public String executePs (String statementÜbergeben, String[] argumente) {
+	/**
+	 * fuehrt gegebene SQL-Abfrage auf Datenbank aus und liefert Ergebnis zurueck mit PreparedStatements
+	 * @param statementuebergeben, SQL-Statement das ausgegeben werden soll
+	 * @param argumente, die Werte welche man in das JOptionPane eingibt
+	 * @return String mit Ergebnis der SQL-Abfrage
+	 */
+	public String executePs (String statementuebergeben, String[] argumente) {
 		
-		String statement = statementÜbergeben;
+		String statement = statementuebergeben;
 		
 		StringBuilder sb = new StringBuilder(10000);
 		
@@ -203,6 +203,28 @@ public class DBAnbindung implements DBInterface {
 		
 		return sb.toString();
 		
+	}
+	/**
+	 * schlie�t verbindung zur DB wieder
+	 */
+	@Override
+	public void DBschliessen() {
+		
+		finalize();
+	}
+	/**
+	 * setzt PreparedStatement und Connection auf null;
+	 */
+	@Override
+	public void finalize() {
+		try {
+			ps.close();
+		} catch (Exception e1) {}
+		ps = null;
+		try {
+			con.close();
+		} catch (Exception e) {}
+		con = null;
 	}
 	
 }
