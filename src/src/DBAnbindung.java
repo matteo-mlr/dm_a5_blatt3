@@ -18,26 +18,14 @@ public class DBAnbindung implements iDatenzugriff {
 	 */
 	private PreparedStatement ps = null;
 	
-
-//	/**
-//	 * Konstruktor, initiallisiert DB Anbindung
-//	 */
-//	public DBAnbindung () {
-//		
-//		DBoeffnen();
-//	}
-	
 	/**
 	 * stellt Verbindung zur DB her
 	 */
-	@Override
 	public void DBoeffnen() {
 		
 		try {
 			
-			con = DriverManager.getConnection(Config.url);
-			
-//			stt = con.createStatement();
+			con = DriverManager.getConnection(Config.URL);
 			
 		} catch (Exception ioe) {
 			con = null;
@@ -205,9 +193,8 @@ public class DBAnbindung implements iDatenzugriff {
 		
 	}
 	/**
-	 * schließt verbindung zur DB wieder
+	 * schlieï¿½t verbindung zur DB wieder
 	 */
-	@Override
 	public void DBschliessen() {
 		
 		finalize();
