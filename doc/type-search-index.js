@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"src","l":"DBAnbindung"},{"p":"src","l":"DBInterface"},{"p":"src","l":"GUI"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"src","l":"Config"},{"p":"src","l":"DBAnbindung"},{"p":"src","l":"GUI"},{"p":"src","l":"iDatenzugriff"}]

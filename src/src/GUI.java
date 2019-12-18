@@ -20,19 +20,19 @@ public class GUI extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Button Array in dem alle Buttons liegen, welche die vorgefertigten SQL-Statements ausf�hren
+	 * Button Array in dem alle Buttons liegen, welche die vorgefertigten SQL-Statements ausfuehren
 	 */
 	private JButton[] buttons = new JButton[10];
 	/**
-	 * Textfeld in dem manuell SQL-Statements eingegeben werden k�nnen
+	 * Textfeld in dem manuell SQL-Statements eingegeben werden koennen
 	 */
 	private JTextField sqlInputField = new JTextField(100);
 	/**
-	 * Textfeld in dem die R�ckgabe der SQL-Abfragen angezeigt wird
+	 * Textfeld in dem die Rueckgabe der SQL-Abfragen angezeigt wird
 	 */
 	private static JTextArea anzeige = new JTextArea();
 	/**
-	 * Button um den Inhalt in sqlInputField auszuf�hren
+	 * Button um den Inhalt in sqlInputField auszufuehren
 	 */
 	JButton execute;
 	/**
@@ -50,7 +50,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * Konstruktor, setzt notwendige werte f�r GUI bzw JFrame
+	 * Konstruktor, setzt notwendige werte fuer GUI bzw JFrame
 	 */
 	public GUI () {
 		
@@ -81,7 +81,7 @@ public class GUI extends JFrame implements ActionListener {
 	
 	
 	/**
-	 * Erstellt Anzeigebereich f�r die Ergebnisse der SQL Abfragen
+	 * Erstellt Anzeigebereich fuer die Ergebnisse der SQL Abfragen
 	 * @return JPanel, die Ausgabe der eingegebenen SQL Abfragen
 	 */
 	private JPanel ausgabeInit () {
@@ -103,8 +103,8 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * dem JPanel wird das sqlInputField hinzugef�gt um manuelle SQL-Eingaben zu erm�glichen
-	 * @return JPanel,  f�r die manuelle eingabe der SQL Statements
+	 * dem JPanel wird das sqlInputField hinzugefuegt um manuelle SQL-Eingaben zu ermoeglichen
+	 * @return JPanel,  fuer die manuelle eingabe der SQL Statements
 	 */
 	private JPanel sqlInputInit () {
 		
@@ -128,7 +128,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * Panel in dem die Buttons eingef�gt werden f�r die vorgefertigten SQL-Statements
+	 * Panel in dem die Buttons eingefuegt werden fuer die vorgefertigten SQL-Statements
 	 * @return JPanel, in welchem die Buttons mit den vorgefertigten SQL-Statements liegen 
 	 */
 	private JPanel buttonPanelInit () {
@@ -160,7 +160,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * wird aufgerufen wenn in der GUI ein Button bet�tigt wird und definiert die Funktionsweise des Buttons
+	 * wird aufgerufen wenn in der GUI ein Button betaetigt wird und definiert die Funktionsweise des Buttons
 	 * @param e, ist das ActionEvent dass durch das betaetigen eines Buttons ausgeloest wird
 	 */
 	public void actionPerformed (ActionEvent e) {

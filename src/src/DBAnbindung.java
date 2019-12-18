@@ -19,13 +19,14 @@ public class DBAnbindung implements iDatenzugriff {
 	private PreparedStatement ps = null;
 	
 
-	/**
-	 * Konstruktor, initiallisiert DB Anbindung
-	 */
-	public DBAnbindung () {
-		
+//	/**
+//	 * Konstruktor, initiallisiert DB Anbindung
+//	 */
+//	public DBAnbindung () {
+//		
 //		DBoeffnen();
-	}
+//	}
+	
 	/**
 	 * stellt Verbindung zur DB her
 	 */
